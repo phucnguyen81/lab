@@ -14,6 +14,9 @@ Vagrant.configure("2") do |config|
   # boxes at https://vagrantcloud.com/search.
   config.vm.box = "bento/ubuntu-20.04"
 
+  # Define the vm name (otherwise `default` is used)
+  config.vm.define :ci_docker_jenkins do |t| end
+
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.
@@ -72,5 +75,6 @@ Vagrant.configure("2") do |config|
     sudo apt update
     sudo apt -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin
     sudo docker run hello-world
+    sudo usermod -aG docker vagrant
   SHELL
 end
