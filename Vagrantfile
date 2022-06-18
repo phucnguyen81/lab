@@ -1,6 +1,9 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+# Same name for both vagrant environment and virtualbox vm
+vm_name = "ci_docker_jenkins"
+
 # All Vagrant configuration is done below. The "2" in Vagrant.configure
 # configures the configuration version (we support older styles for
 # backwards compatibility). Please don't change it unless you know what
@@ -15,7 +18,7 @@ Vagrant.configure("2") do |config|
   config.vm.box = "bento/ubuntu-20.04"
 
   # Define the vm name (otherwise `default` is used)
-  config.vm.define :ci_docker_jenkins do |t| end
+  config.vm.define vm_name do |t| end
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -50,18 +53,15 @@ Vagrant.configure("2") do |config|
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
-  # Example for VirtualBox:
-  #
-  # config.vm.provider "virtualbox" do |vb|
-  #   # Display the VirtualBox GUI when booting the machine
-  #   vb.gui = true
-  #
-  #   # Customize the amount of memory on the VM:
-  #   vb.memory = "1024"
-  # end
-  #
   # View the documentation for the provider you are using for more
   # information on available options.
+  #
+  # Use VirtualBox to create the VM.
+  config.vm.provider "virtualbox" do |vb|
+    vb.name = vm_name
+    vb.memory = 4096
+    vb.cpus = 4
+  end
 
   # Enable provisioning with a shell script. Additional provisioners such as
   # Ansible, Chef, Docker, Puppet and Salt are also available. Please see the
@@ -76,5 +76,9 @@ Vagrant.configure("2") do |config|
     sudo apt -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin
     sudo docker run hello-world
     sudo usermod -aG docker vagrant
+
+    cd /vagrant
+    docker build -t hello .
+    docker run -d -p 8000:8000 hello
   SHELL
 end
