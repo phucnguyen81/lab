@@ -67,17 +67,35 @@ Vagrant.configure("2") do |config|
   # Ansible, Chef, Docker, Puppet and Salt are also available. Please see the
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
-    sudo apt update
-    sudo apt install ca-certificates curl gnupg lsb-release
-    sudo mkdir -p /etc/apt/keyrings
+    sudo su
+
+    # Install common packages
+    apt update
+    apt install ca-certificates curl gnupg lsb-release
+
+    mkdir -p /etc/apt/keyrings
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-    sudo apt update
-    sudo apt -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin
-    sudo docker run hello-world
-    sudo usermod -aG docker vagrant
+    apt update
+    apt -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+    docker run hello-world
 
+    # Install python
+    apt update
+    apt install software-properties-common
+    add-apt-repository ppa:deadsnakes/ppa
+    apt update
+    apt -y install python3.11 python3.11-distutils
+    curl -sS https://bootstrap.pypa.io/get-pip.py | python3.11
+    python3.11 -m pip install pipenv
+
+    # Install python dependencies for app development
+    cd /vagrant/hello
+    pipenv install --dev
+
+    # Build then run the app in a Docker container
     cd /vagrant
+    usermod -aG docker vagrant
     docker build -t hello .
     docker run -d -p 8000:8000 hello
   SHELL
