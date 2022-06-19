@@ -16,3 +16,20 @@ Advantages:
 Disadvantages:
 - Overhead of using Vagrant and Docker
 - Complications of debugging Docker containers
+
+# Installation
+
+- Install Vagrant
+- Create Vagrant VM: `vagrant up --provision`
+
+# Development
+
+- SSH into Vagrant VM: `vagrant ssh`
+- Run development server: `pipenv run python manage.py runserver`
+- To develope with VS Code: search for `Vagrant VS Code remote SSH development`
+
+# Dockerize the app
+
+- Build docker image: `docker build -t hello .`
+- Run the app in Docker container: `docker run -d -p 8000:8000 hello`
+

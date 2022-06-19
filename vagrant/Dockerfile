@@ -5,6 +5,8 @@ COPY hello hello
 WORKDIR hello
 
 RUN pip install --no-cache-dir pipenv
+# Tell pipenv to create venv in the current directory
+ENV PIPENV_VENV_IN_PROJECT=1
 RUN pipenv install
 
 ENTRYPOINT [ "python", "manage.py", "runserver"]

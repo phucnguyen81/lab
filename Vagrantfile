@@ -67,18 +67,20 @@ Vagrant.configure("2") do |config|
   # Ansible, Chef, Docker, Puppet and Salt are also available. Please see the
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
-    sudo su
-
     # Install common packages
     apt update
     apt install ca-certificates curl gnupg lsb-release
 
+    # Instal docker
     mkdir -p /etc/apt/keyrings
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
     apt update
     apt -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+    # Test docker
     docker run hello-world
+    # Let vagrant user uses docker CLI
+    sudo usermod -aG docker vagrant
 
     # Install python
     apt update
@@ -86,17 +88,13 @@ Vagrant.configure("2") do |config|
     add-apt-repository ppa:deadsnakes/ppa
     apt update
     apt -y install python3.11 python3.11-distutils
+    # Install pip
     curl -sS https://bootstrap.pypa.io/get-pip.py | python3.11
+    # Install pipenv
     python3.11 -m pip install pipenv
 
     # Install python dependencies for app development
     cd /vagrant/hello
-    pipenv install --dev
-
-    # Build then run the app in a Docker container
-    cd /vagrant
-    usermod -aG docker vagrant
-    docker build -t hello .
-    docker run -d -p 8000:8000 hello
+    runuser -u vagrant -- pipenv install --dev
   SHELL
 end
