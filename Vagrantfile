@@ -97,10 +97,10 @@ Vagrant.configure("2") do |config|
     cd /vagrant/hello
     runuser -u vagrant -- pipenv install --dev
     # Build docker image for hello app
-    docker build -t hello -f Dockerfile_hello .
+    docker build -t my_hello -f Dockerfile_hello .
 
     # Build jenkins image
     cd /vagrant/jenkins
-    docker build -t jenkins -f Dockerfile_jenkins .
+    docker build -t my_jenkins -f Dockerfile_jenkins .
   SHELL
 end
