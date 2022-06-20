@@ -18,4 +18,4 @@ security:
         strategy: triggeringUsersAuthorizationStrategy
 unclassified:
   location:
-    url: http://server_ip:8080/
+    url: http://localhost:8080/
