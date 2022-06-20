@@ -28,8 +28,13 @@ Disadvantages:
 - Run development server: `pipenv run python manage.py runserver`
 - To develope with VS Code: search for `Vagrant VS Code remote SSH development`
 
-# Dockerize the app
+# Run the app with Docker
 
-- Build docker image: `docker build -t hello .`
-- Run the app in Docker container: `docker run -d -p 8000:8000 hello`
+- Build the app image: `docker build -t my_hello -f Dockerfile_hello .`
+- Run the app in container: `docker run --name my_hello -d -p 8000:8000 my_hello`
+
+# Run Jenkins with Docker
+
+- Build Jenkins image: `docker build -t my_jenkins -f Dockerfile_jenkins .`
+- Run Jenkins in container: `docker run --name my_jenkins -d -p 8080:8080 my_jenkins`
 
