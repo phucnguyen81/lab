@@ -4,6 +4,14 @@
 # Same name for both vagrant environment and virtualbox vm
 vm_name = "ci_docker_jenkins"
 
+jenkins_home = "var/lib/jenkins"
+
+env = {
+    "JENKINS_HOME" => jenkins_home,
+    "JENKINS_PLUGINS_DIR" => "#{jenkins_home}/plugins",
+    "JENKINS_PLUGINS_FILE" => "/vagrant/jenkins/plugins.txt",
+}
+
 # All Vagrant configuration is done below. The "2" in Vagrant.configure
 # configures the configuration version (we support older styles for
 # backwards compatibility). Please don't change it unless you know what
@@ -67,7 +75,9 @@ Vagrant.configure("2") do |config|
   # Enable provisioning with a shell script. Additional provisioners such as
   # Ansible, Chef, Docker, Puppet and Salt are also available. Please see the
   # documentation for more information about their specific syntax and use.
-  config.vm.provision "shell", inline: <<-SHELL
+  config.vm.provision "shell", env: env, inline: <<-SHELL
+    cp --force /vagrant/configs/etc_environment /etc/environment
+
     # Install common packages
     apt update
     apt install ca-certificates curl gnupg lsb-release
@@ -81,7 +91,15 @@ Vagrant.configure("2") do |config|
     # Test docker
     docker run hello-world
     # Let vagrant user uses docker CLI
-    sudo usermod -aG docker vagrant
+    usermod -aG docker vagrant
+
+    # Add docker user
+    useradd -g docker --create-home docker
+    echo docker:docker | chpasswd
+
+    # Add jenkins user
+    useradd -g docker --create-home jenkins
+    echo jenkins:jenkins | chpasswd
 
     # Install python
     apt update
@@ -93,15 +111,20 @@ Vagrant.configure("2") do |config|
     curl -sS https://bootstrap.pypa.io/get-pip.py | python3.11
     # Install pipenv
     python3.11 -m pip install pipenv
-
     # Install python dependencies for app development
-    cd /vagrant/hello
     runuser -u vagrant -- pipenv install --dev
-    # Build docker image for hello app
+
+    # Build app image
+    cd /vagrant/hello
     docker build -t my_hello -f Dockerfile_hello .
 
-    # Build jenkins image
-    cd /vagrant/jenkins
-    docker build -t my_jenkins -f Dockerfile_jenkins .
+    # Install jenkins and plugins
+    sudo apt install -y openjdk-11-jre
+    wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | apt-key add -
+    sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+    apt update
+    apt install -y jenkins
+    wget -O /opt/jenkins-plugin-manager.jar https://github.com/jenkinsci/plugin-installation-manager-tool/releases/download/2.12.6/jenkins-plugin-manager-2.12.6.jar
+    java -jar /opt/jenkins-plugin-manager.jar --war /usr/share/java/jenkins.war --plugin-file "$JENKINS_PLUGINS_FILE" --plugin-download-directory "$JENKINS_PLUGINS_DIR"
   SHELL
 end

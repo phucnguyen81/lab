@@ -13,3 +13,6 @@ insert_final_newline = false
 
 [*.{yml,yaml}]
 indent_size = 2
+
+[*.{groovy,gvy,gy,gsh}]
+indent_size = 2

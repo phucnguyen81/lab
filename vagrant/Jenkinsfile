@@ -1,0 +1,16 @@
+pipeline {
+  agent {
+    docker {
+      image 'phucknguyen/my_agent'
+      label 'docker'
+    }
+  }
+  stages {
+    stage('Hello') {
+      steps {
+        sh "echo \"puts 'Hello World from Ruby'\" > hello.rb"
+        sh 'ruby hello.rb'
+      }
+    }
+  }
+}
