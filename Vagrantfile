@@ -4,14 +4,6 @@
 # Same name for both vagrant environment and virtualbox vm
 vm_name = "ci_docker_jenkins"
 
-jenkins_home = "var/lib/jenkins"
-
-env = {
-    "JENKINS_HOME" => jenkins_home,
-    "JENKINS_PLUGINS_DIR" => "#{jenkins_home}/plugins",
-    "JENKINS_PLUGINS_FILE" => "/vagrant/jenkins/plugins.txt",
-}
-
 # All Vagrant configuration is done below. The "2" in Vagrant.configure
 # configures the configuration version (we support older styles for
 # backwards compatibility). Please don't change it unless you know what
@@ -75,56 +67,15 @@ Vagrant.configure("2") do |config|
   # Enable provisioning with a shell script. Additional provisioners such as
   # Ansible, Chef, Docker, Puppet and Salt are also available. Please see the
   # documentation for more information about their specific syntax and use.
-  config.vm.provision "shell", env: env, inline: <<-SHELL
-    cp --force /vagrant/configs/etc_environment /etc/environment
-
+  config.vm.provision "shell", privileged: false, inline: <<-SHELL
     # Install common packages
-    apt update
-    apt install ca-certificates curl gnupg lsb-release
+    sudo apt update
+    sudo apt install ca-certificates curl wget gnupg lsb-release
 
-    # Instal docker
-    mkdir -p /etc/apt/keyrings
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
-    apt update
-    apt -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin
-    # Test docker
-    docker run hello-world
-    # Let vagrant user uses docker CLI
-    usermod -aG docker vagrant
+    # Create directories
+    # mkdir /home/vagrant/jenkins_home
 
-    # Add docker user
-    useradd -g docker --create-home docker
-    echo docker:docker | chpasswd
-
-    # Add jenkins user
-    useradd -g docker --create-home jenkins
-    echo jenkins:jenkins | chpasswd
-
-    # Install python
-    apt update
-    apt install software-properties-common
-    add-apt-repository ppa:deadsnakes/ppa
-    apt update
-    apt -y install python3.11 python3.11-distutils
-    # Install pip
-    curl -sS https://bootstrap.pypa.io/get-pip.py | python3.11
-    # Install pipenv
-    python3.11 -m pip install pipenv
-    # Install python dependencies for app development
-    runuser -u vagrant -- pipenv install --dev
-
-    # Build app image
-    cd /vagrant/hello
-    docker build -t my_hello -f Dockerfile_hello .
-
-    # Install jenkins and plugins
-    sudo apt install -y openjdk-11-jre
-    wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | apt-key add -
-    sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
-    apt update
-    apt install -y jenkins
-    wget -O /opt/jenkins-plugin-manager.jar https://github.com/jenkinsci/plugin-installation-manager-tool/releases/download/2.12.6/jenkins-plugin-manager-2.12.6.jar
-    java -jar /opt/jenkins-plugin-manager.jar --war /usr/share/java/jenkins.war --plugin-file "$JENKINS_PLUGINS_FILE" --plugin-download-directory "$JENKINS_PLUGINS_DIR"
+    # Replace environment file
+    sudo cp --force /vagrant/configs/etc_environment /etc/environment
   SHELL
 end

@@ -3,12 +3,12 @@ jenkins:
     local:
       allowsSignup: false
       users:
-      - id: ${JENKINS_ADMIN_ID}
-        password: ${JENKINS_ADMIN_PASSWORD}
+      - id: jenkins
+        password: jenkins
   authorizationStrategy:
     globalMatrix:
       permissions:
-        - "USER:Overall/Administer:${JENKINS_ADMIN_ID}"
+        - "USER:Overall/Administer:jenkins"
   remotingSecurity:
     enabled: true
 security:
