@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 # Same name for both vagrant environment and virtualbox vm
-vm_name = "ci_docker_jenkins"
+vm_name = "cd_docker_jenkins"
 
 # All Vagrant configuration is done below. The "2" in Vagrant.configure
 # configures the configuration version (we support older styles for
@@ -50,7 +50,7 @@ Vagrant.configure("2") do |config|
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  config.vm.synced_folder "vagrant", "/vagrant"
+  config.vm.synced_folder ".", "/vagrant"
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
@@ -72,10 +72,7 @@ Vagrant.configure("2") do |config|
     sudo apt update
     sudo apt install ca-certificates curl wget gnupg lsb-release
 
-    # Create directories
-    # mkdir /home/vagrant/jenkins_home
-
     # Replace environment file
-    sudo cp --force /vagrant/configs/etc_environment /etc/environment
+    sudo cp --force /vagrant/etc_environment /etc/environment
   SHELL
 end
