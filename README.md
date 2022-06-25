@@ -8,25 +8,29 @@ Use Docker and Jenkins directly.
     - Install Jenkins for Continuous Integration
     - Combine Docker and Jenkins for Continuous Delivery
 
-# Installation
+# Create Vagrant VM
 
 - Install Vagrant
 - Create Vagrant VM: `vagrant up --provision`
-- Docker and Jenkins are pre-installed
-
-# Development
-
 - SSH into Vagrant VM: `vagrant ssh`
-- Run development server: `cd /vagrant/hello; pipenv run python manage.py runserver`
-- To develope with VS Code: search for `Vagrant VS Code remote SSH development`
+
+# Install jenkins
+
+- Install jenkins: `/vagrant/jenkins/install_jenkins.sh`
+- Install jenkins plugins: `/vagrant/jenkins/install_plugins.sh`
+- Default jenkins url: `localhost:8080`
+
+# Install python
+
+- Install python and pipenv: `/vagrant/python/install_python.sh`
+
+# Install the app
+
+- Go to the app directory: `cd /vagrant/hello`
+- Run development server: `pipenv run python manage.py runserver 0.0.0.0:8000`
+- Test the endpoint: `curl localhost:8000`
 
 # Run the app with Docker
 
 - Build the app image: `docker build -t my_hello -f Dockerfile_hello .`
 - Run the app in container: `docker run --name my_hello -d -p 8000:8000 my_hello`
-
-# Jenkins
-
-Jenkins comes pre-installed with the Vagrant VM.
-JENKINS_URL is at `localhost:8080`.
-
