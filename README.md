@@ -18,6 +18,7 @@ An app for learning Jenkins.
 The Jenkinsfile is for Continuous Integration using Jenkins.
 
 - Configure a Jenkins project with:
+    - Build triggers: Poll SCM every minute: `* * * * *`
     - Pipeline: `Pipeline script from SCM`
     - Repository: this repo
     - Branch: this branch
