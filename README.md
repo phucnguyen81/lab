@@ -24,4 +24,3 @@ The Jenkinsfile is for Continuous Integration using Jenkins.
     - Script Path: Jenkinsfile
 - Make a change to this branch and commit
 - Wait a bit to verify that the job runs
-
