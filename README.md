@@ -6,7 +6,7 @@ Use Docker and Jenkins directly.
     - Install Docker to create services (database, web servers,...) for development
     - Develop some applications
     - Install Jenkins for Continuous Integration
-    - Combine Docker and Jenkins for Continuous Delivery
+    - Combine Docker and Jenkins for Continuous Deliv   ery
 
 # Create Vagrant VM
 
