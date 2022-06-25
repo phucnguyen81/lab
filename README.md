@@ -1,6 +1,6 @@
 # Description
 
-The hello world app for testing CI/CD.
+An app for learning Jenkins.
 
 # Install python
 
@@ -16,8 +16,12 @@ The hello world app for testing CI/CD.
 # Jenkinsfile
 
 The Jenkinsfile is for Continuous Integration using Jenkins.
-Configure a Jenkins project with:
+
+- Configure a Jenkins project with:
     - Pipeline: `Pipeline script from SCM`
     - Repository: this repo
     - Branch: this branch
     - Script Path: Jenkinsfile
+- Make a change to this branch and commit
+- Wait a bit to verify that the job runs
+
