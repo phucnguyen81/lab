@@ -17,7 +17,8 @@ pipeline {
         }
         stage("Docker build") {
             steps {
-                sh "docker build -t phucknguyen/hello ."
+                // sh "docker build -t phucknguyen/hello ."
+                docker.build("phucknguyen/hello")
             }
         }
     }
