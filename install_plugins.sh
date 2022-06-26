@@ -7,6 +7,7 @@ sudo java -jar "${JENKINS_HOME}/jenkins-plugin-manager.jar" --war /usr/share/jav
 
 # Let jenkins use docker
 sudo usermod -a -G docker jenkins
+newgrp docker
 
 # Restart jenkins to pickup the updates
 sudo service jenkins restart
