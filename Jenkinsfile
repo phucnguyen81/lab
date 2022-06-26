@@ -6,14 +6,14 @@ pipeline {
     stages {
         stage("Install") {
             steps {
-                dir("hello/hello") {
+                dir("hello") {
                     sh "pipenv install"
                 }
             }
         }
         stage("Unit test") {
             steps {
-                dir("hello/hello") {
+                dir("hello") {
                     sh "pipenv run python manage.py test"
                 }
             }
