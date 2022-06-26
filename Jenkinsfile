@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'built-in' }
+    agent { label "built-in" }
     stages {
         stage("Install") {
             steps {
@@ -13,6 +13,11 @@ pipeline {
                 dir("hello") {
                     sh "pipenv run python manage.py test"
                 }
+            }
+        }
+        stage("Docker build") {
+            steps {
+                sh "docker build -t phucknguyen/hello ."
             }
         }
     }

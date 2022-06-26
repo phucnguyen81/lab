@@ -1,7 +1,7 @@
 FROM python:3.11.0b3-bullseye
 EXPOSE 8000
 
-COPY . hello
+COPY hello hello
 WORKDIR hello
 
 # Install pipenv
