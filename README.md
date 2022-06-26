@@ -4,9 +4,7 @@ An app for learning Jenkins.
 
 # Installation
 
-- Install python: `install_python.sh`
-- Go to the app's base directory: `cd hello`
-- Install app dependencies: `pipenv install --dev`
+- Install development environment: `install.sh`
 - Start the development server: `pipenv run python manage.py runserver 0.0.0.0:8000`
 - Test the endpoint: `curl localhost:8000`
 
