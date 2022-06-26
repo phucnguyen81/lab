@@ -2,14 +2,11 @@
 
 An app for learning Jenkins.
 
-# Install python
+# Installation
 
-- Install python and pipenv: `install_python.sh`
-
-# Install the app
-
-- Clone this branch: `git clone --branch hello <repo_url> hello`
-- Go to the app directory: `cd hello`
+- Install python: `install_python.sh`
+- Go to the app's base directory: `cd hello`
+- Install app dependencies: `pipenv install --dev`
 - Start the development server: `pipenv run python manage.py runserver 0.0.0.0:8000`
 - Test the endpoint: `curl localhost:8000`
 
