@@ -1,8 +1,5 @@
 pipeline {
-    agent any
-    triggers {
-        pollSCM('* * * * *')
-    }
+    agent { label 'master' }
     stages {
         stage("Install") {
             steps {
