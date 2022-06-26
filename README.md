@@ -1,3 +1,3 @@
 # Description
 
-Create the Vagrant VM for other branches.
+Run `install_python.sh` to install pip and pipenv for Python development with virtual environments.
