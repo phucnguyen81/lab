@@ -10,13 +10,13 @@ Use Docker and Jenkins directly.
 
 # Install jenkins
 
-- Install jenkins: `/vagrant/jenkins/install_jenkins.sh`
-- Install jenkins plugins: `/vagrant/jenkins/install_plugins.sh`
-- Default jenkins url: `localhost:8080`
+- Install jenkins: `./jenkins/install_jenkins.sh`
+- Install common jenkins plugins: `./jenkins/install_plugins.sh`
+- Go to default jenkins url: `localhost:8080`
 
 # Install python
 
-- Install python and pipenv: `/vagrant/python/install_python.sh`
+- Install python and pipenv: `./python/install_python.sh`
 
 # Install the app
 
