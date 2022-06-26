@@ -80,6 +80,15 @@ Vagrant.configure("2") do |config|
     sudo apt -y install python3-pip
     sudo python3 -m pip install pipenv
 
+    # Install docker
+    sudo mkdir -p /etc/apt/keyrings
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    sudo apt update
+    sudo apt -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+    # Let vagrant user uses docker
+    sudo usermod -aG docker vagrant
+
     # Customize the system environment file
     sudo cp --force /vagrant/etc_environment /etc/environment
   SHELL
