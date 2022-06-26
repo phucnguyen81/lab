@@ -1,3 +1,3 @@
 # Description
 
-Install Docker on the base machine.
+Run `install_docker.sh` to install Docker.
