@@ -1,3 +1,3 @@
 # Description
 
-Create the Vagrant VM for other branches.
+Install Docker on the base machine.
