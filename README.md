@@ -8,12 +8,6 @@ Use Docker and Jenkins directly.
     - Install Jenkins for Continuous Integration
     - Combine Docker and Jenkins for Continuous Delivery
 
-# Create Vagrant VM
-
-- Install Vagrant
-- Create Vagrant VM: `vagrant up --provision`
-- SSH into Vagrant VM: `vagrant ssh`
-
 # Install jenkins
 
 - Install jenkins: `/vagrant/jenkins/install_jenkins.sh`
