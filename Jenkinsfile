@@ -20,5 +20,18 @@ pipeline {
                 sh "docker build -t phucknguyen/hello ."
             }
         }
+        stage("Docker login") {
+            steps {
+                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'docker-hub-credentials',
+                        usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+                    sh "docker login --username $USERNAME --password $PASSWORD"
+                }
+            }
+        }
+        stage("Docker push") {
+            steps {
+                sh "docker push phucknguyen/hello"
+            }
+        }
     }
 }
