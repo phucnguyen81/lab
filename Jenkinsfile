@@ -33,5 +33,21 @@ pipeline {
                 sh "docker push phucknguyen/hello"
             }
         }
+        stage("Deploy to staging") {
+            steps {
+                sh "docker run -d --rm -p 8000:8000 --name hello phucknguyen/hello"
+            }
+        }
+        stage("Acceptance test") {
+            steps {
+                sleep 60
+                sh "chmod +x acceptance_test.sh && ./acceptance_test.sh"
+            }
+        }
+        post {
+            always {
+                sh "docker stop hello"
+            }
+        }
     }
 }

@@ -14,5 +14,5 @@ ENV PIPENV_VENV_IN_PROJECT=1
 RUN pipenv install
 
 # Run the development server
-ENTRYPOINT [ "python", "manage.py", "runserver"]
+ENTRYPOINT [ "pipenv", "run", "python", "manage.py", "runserver"]
 CMD [ "0.0.0.0:8000" ]
