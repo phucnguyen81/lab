@@ -47,7 +47,9 @@ pipeline {
     }
     post {
         always {
-            sh "docker stop hello"
+            stage("Stop docker container") {
+                sh "docker stop hello"
+            }
         }
     }
 }
