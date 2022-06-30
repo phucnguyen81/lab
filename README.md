@@ -1,6 +1,6 @@
 # Description
 
-An app for learning Jenkins.
+A simple Django app to learn Continuous Delivery.
 
 # Installation
 
@@ -12,12 +12,13 @@ An app for learning Jenkins.
 
 The Jenkinsfile is for Continuous Integration using Jenkins.
 
-- Configure a Jenkins project:
-    - Build triggers: Poll SCM every minute: `* * * * *`
-    - Pipeline: `Pipeline script from SCM`
-    - Repository: this repo
-    - Branch: this branch
-    - Additional behaviors: Clean before check out
-    - Script Path: Jenkinsfile
-- Make a change to this branch and commit
-- Wait a bit to verify that the job has started
+- Go to Jenkins URL
+- Build triggers: Poll SCM every minute: `* * * * *`
+- Pipeline: `Pipeline script from SCM`
+- Repository: this repo
+- Branch: this branch
+- Additional behaviors: Clean before check out
+- Script Path: Jenkinsfile
+- Install Docker on the built-in node
+- Create credentials named `docker-hub-credentials` for pushing to Docker Hub
+- Try Jenkins `Build Now` and fix what might come up
