@@ -70,7 +70,8 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", privileged: false, inline: <<-SHELL
     # Install common packages
     sudo apt update
-    sudo apt -y install ca-certificates curl wget gnupg lsb-release
+    sudo apt --yes install ca-certificates curl wget gnupg lsb-release
+    sudo apt --yes install python3-pip
 
     # Customize the system environment file
     sudo cp --force /vagrant/etc_environment /etc/environment
