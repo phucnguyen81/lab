@@ -73,6 +73,8 @@ Vagrant.configure("2") do |config|
     # Install common packages
     sudo apt update
     sudo apt --yes install ca-certificates curl wget gnupg lsb-release
+    sudo apt --yes install software-properties-common
+    sudo apt --yes install aptitude
     sudo apt --yes install python3-pip
 
     # Customize the system environment file
