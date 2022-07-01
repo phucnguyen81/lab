@@ -1,0 +1,6 @@
+---
+
+
+os_environment:
+- key: JENKINS_HOME
+  value: '"/var/lib/jenkins"'
