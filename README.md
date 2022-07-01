@@ -1,3 +1,3 @@
 # Description
 
-Install common packages: `ansible-playbook playbook.yml`
+Use Ansible to install Docker: `ansible-playbook playbook.yml`
