@@ -1,3 +1,3 @@
 # Description
 
-Install common packages: `ansible-playbook playbook.yml`
+Install Ansible, the configuration management tool for infrastructure automation.
