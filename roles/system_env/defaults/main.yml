@@ -2,5 +2,8 @@
 
 
 os_environment:
+- key: ANSIBLE_LOCALHOST_WARNING
+  value: "false"
 - key: JENKINS_HOME
   value: '"/var/lib/jenkins"'
+
