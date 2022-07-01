@@ -1,0 +1,17 @@
+---
+
+
+base_common_packages:
+  - curl
+  - fzf
+  - git
+  - htop
+  - python3-pip
+  - software-properties-common
+  - unzip
+  - vim
+  - wget
+
+
+base_common_upgrades:
+  - ca-certificates

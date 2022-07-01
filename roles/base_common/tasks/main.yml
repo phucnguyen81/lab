@@ -1,0 +1,14 @@
+---
+
+
+- name: install packages
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ base_common_packages }}"
+
+
+- name: upgrade packages
+  apt:
+    name: "{{ base_common_upgrades }}"
+    state: latest
