@@ -1,5 +1,3 @@
 # Description
 
-Learn Ansible.
-
-- `ansible-playbook -i ansible/vagrant_hosts ansible/main.yml --tags "base,web,ecgps"`
+Install common packages: `ansible-playbook playbook.yml`

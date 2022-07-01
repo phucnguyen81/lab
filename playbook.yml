@@ -1,7 +1,8 @@
 ---
 
 
-- hosts: all
+- hosts: localhost
+  connection: local
   become: true
   become_method: sudo
   tasks:
@@ -15,13 +16,6 @@
       name: "{{ item }}"
       state: present
     with_items: "{{ base_common_packages }}"
-  - name: Populate /etc/environment
-    lineinfile:
-      path: "/etc/environment"
-      state: present
-      regexp: "^{{ item.key }}="
-      line: "{{ item.key }}={{ item.value}}"
-    with_items: "{{ os_environment }}"
   vars:
     base_common_packages:
       - curl
@@ -33,6 +27,3 @@
       - unzip
       - vim
       - wget
-    os_environment:
-    - key: JENKINS_HOME
-      value: '"/var/lib/jenkins"'
