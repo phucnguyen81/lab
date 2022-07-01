@@ -1,4 +1,28 @@
 ---
 
+
 - hosts: all
   become: true
+  become_method: sudo
+  tasks:
+  - name: Update packages
+    apt:
+      upgrade: yes
+      update_cache: yes
+      cache_valid_time: 86400  # 86400: 1 day
+  - name: Install common packages
+    package:
+      name: "{{ item }}"
+      state: present
+    with_items: "{{ base_common_packages }}"
+  vars:
+    base_common_packages:
+      - curl
+      - fzf
+      - git
+      - htop
+      - python3-pip
+      - software-properties-common
+      - unzip
+      - vim
+      - wget
