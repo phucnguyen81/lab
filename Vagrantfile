@@ -69,9 +69,9 @@ Vagrant.configure("2") do |config|
   # Enable provisioning with a shell script. Additional provisioners such as
   # Ansible, Chef, Docker, Puppet and Salt are also available. Please see the
   # documentation for more information about their specific syntax and use.
-  config.vm.provision "shell", privileged: false, inline: <<-SHELL
+  config.vm.provision "shell", privileged: true, inline: <<-SHELL
     # Install common packages
-    sudo apt update
+    sudo apt --yes update
     sudo apt --yes install ca-certificates curl wget gnupg lsb-release
     sudo apt --yes install software-properties-common
     sudo apt --yes install aptitude
