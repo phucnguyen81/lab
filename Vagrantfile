@@ -57,27 +57,27 @@
 # end
 
 Vagrant.configure("2") do |config|
-  config.vm.define "vma", primary: true do |vma|
-    vma.vm.box = "bento/ubuntu-20.04"
-    vma.vm.hostname = "vma"
-    vma.vm.network :private_network, ip: "10.0.0.10"
+  config.vm.define "earth", primary: true do |earth|
+    earth.vm.box = "bento/ubuntu-20.04"
+    earth.vm.hostname = "earth"
+    earth.vm.network :private_network, ip: "10.0.0.10"
 
     # Use VirtualBox provider to create the VM
-    vma.vm.provider "virtualbox" do |vb|
-      vb.name = "vma"
+    earth.vm.provider "virtualbox" do |vb|
+      vb.name = "earth"
       vb.memory = 2048  # 2GB
       vb.cpus = 2  # 2 cores
     end
   end
 
-  config.vm.define "vmb" do |vmb|
-    vmb.vm.box = "bento/ubuntu-20.04"
-    vmb.vm.hostname = "vmb"
-    vmb.vm.network :private_network, ip: "10.0.0.11"
+  config.vm.define "moon" do |moon|
+    moon.vm.box = "bento/ubuntu-20.04"
+    moon.vm.hostname = "moon"
+    moon.vm.network :private_network, ip: "10.0.0.11"
 
     # Use VirtualBox provider to create the VM
-    vmb.vm.provider "virtualbox" do |vb|
-      vb.name = "vmb"
+    moon.vm.provider "virtualbox" do |vb|
+      vb.name = "moon"
       vb.memory = 2048  # 2GB
       vb.cpus = 2  # 2 cores
     end
