@@ -85,6 +85,11 @@ Vagrant.configure("2") do |config|
 
   # Install avahi on all machines
   config.vm.provision "shell", inline: <<-SHELL
+    # Remove snapd permanently
+    apt purge snapd
+    apt-mark hold snapd
+
+    # Install avahi to map hostname to ip
     apt-get install -y avahi-daemon libnss-mdns
   SHELL
 end
