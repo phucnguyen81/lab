@@ -1,0 +1,9 @@
+Host moon
+  HostName moon.local
+  User vagrant
+  Port 22
+  UserKnownHostsFile=/dev/null
+  StrictHostKeyChecking no
+  PasswordAuthentication no
+  IdentityFile ~/.ssh/nodes.key
+  IdentitiesOnly yes

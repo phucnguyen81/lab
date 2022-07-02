@@ -10,15 +10,6 @@
 # For a complete reference, please see the online documentation at
 # https://docs.vagrantup.com.
 
-# Every Vagrant development environment requires a box. You can search for
-# boxes at https://vagrantcloud.com/search.
-# config.vm.box = "bento/ubuntu-20.04"
-
-# Disable automatic box update checking. If you disable this, then
-# boxes will only be checked for updates when the user runs
-# `vagrant box outdated`. This is not recommended.
-# config.vm.box_check_update = false
-
 # Create a forwarded port mapping which allows access to a specific port
 # within the machine from a port on the host machine. In the example below,
 # accessing "localhost:8080" will access port 80 on the guest machine.
@@ -38,23 +29,6 @@
 # Bridged networks make the machine appear as another physical device on
 # your network.
 # config.vm.network "public_network"
-
-# Share an additional folder to the guest VM. The first argument is
-# the path on the host to the actual folder. The second argument is
-# the path on the guest to mount the folder. And the optional third
-# argument is a set of non-required options.
-# config.vm.synced_folder ".", "/vagrant"
-
-# Provider-specific configuration so you can fine-tune various
-# backing providers for Vagrant. These expose provider-specific options.
-# View the documentation for the provider you are using for more
-# information on available options.
-# Use VirtualBox provider to create the VM
-# config.vm.provider "virtualbox" do |vb|
-#   vb.name = vm_name
-#   vb.memory = 4096  # 4GB
-#   vb.cpus = 4  # 4 cores
-# end
 
 Vagrant.configure("2") do |config|
   config.vm.synced_folder ".", "/vagrant"
@@ -88,7 +62,7 @@ Vagrant.configure("2") do |config|
       # Copy keys to shared directory
       cp --force ~/.ssh/nodes.key.pub /vagrant/tmp/nodes.key.pub
       # Set ssh config
-      cp --force /vagrant/earth_ssh_config ~/.ssh/config
+      cp --force /vagrant/ssh_config_earth ~/.ssh/config
     SHELL
   end
 
