@@ -57,6 +57,18 @@
 # end
 
 Vagrant.configure("2") do |config|
+  config.vm.synced_folder ".", "/vagrant"
+
+  # Install avahi on all machines
+  config.vm.provision "shell", inline: <<-SHELL
+    # Remove snapd permanently
+    apt purge snapd
+    apt-mark hold snapd
+
+    # Install avahi to map hostname to ip
+    apt-get install -y avahi-daemon libnss-mdns
+  SHELL
+
   config.vm.define "earth", primary: true do |earth|
     earth.vm.box = "bento/ubuntu-20.04"
     earth.vm.hostname = "earth"
@@ -68,6 +80,16 @@ Vagrant.configure("2") do |config|
       vb.memory = 2048  # 2GB
       vb.cpus = 2  # 2 cores
     end
+
+    # Generate ssh key
+    earth.vm.provision "shell", privileged: false, inline: <<-SHELL
+      # Generate ssh key
+      ssh-keygen -t rsa -b 4096 -f ~/.ssh/nodes.key -C "Shared insecure nodes key" -N ""
+      # Copy keys to shared directory
+      cp --force ~/.ssh/nodes.key.pub /vagrant/tmp/nodes.key.pub
+      # Set ssh config
+      cp --force /vagrant/earth_ssh_config ~/.ssh/config
+    SHELL
   end
 
   config.vm.define "moon" do |moon|
@@ -81,15 +103,12 @@ Vagrant.configure("2") do |config|
       vb.memory = 2048  # 2GB
       vb.cpus = 2  # 2 cores
     end
+
+    moon.vm.provision "shell", privileged: false, inline: <<-SHELL
+      touch ~/.ssh/authorized_keys
+      chmod 600 ~/.ssh/authorized_keys
+      PUBKEY=$(cat /vagrant/tmp/nodes.key.pub); grep -q "$PUBKEY"  ~/.ssh/authorized_keys || echo "$PUBKEY" >> ~/.ssh/authorized_keys
+      rm /vagrant/tmp/nodes.key.pub
+    SHELL
   end
-
-  # Install avahi on all machines
-  config.vm.provision "shell", inline: <<-SHELL
-    # Remove snapd permanently
-    apt purge snapd
-    apt-mark hold snapd
-
-    # Install avahi to map hostname to ip
-    apt-get install -y avahi-daemon libnss-mdns
-  SHELL
 end
