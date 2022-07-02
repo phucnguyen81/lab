@@ -16,3 +16,6 @@ indent_size = 2
 
 [*.{groovy,gvy,gy,gsh}]
 indent_size = 2
+
+[Vagrantfile]
+indent_size = 2
