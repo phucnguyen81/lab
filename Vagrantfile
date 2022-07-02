@@ -1,8 +1,9 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# Same name for both vagrant environment and virtualbox vm
-vm_name = "cd_docker_jenkins"
+vm_name = "cd_docker_jenkins"  # Same name for both vagrant environment and virtualbox vm
+vm_memory = 4096  # 4 GB
+vm_cpus = 4  # 4 cores
 
 # All Vagrant configuration is done below. The "2" in Vagrant.configure
 # configures the configuration version (we support older styles for
@@ -62,15 +63,25 @@ Vagrant.configure("2") do |config|
   # Use VirtualBox to create the VM.
   config.vm.provider "virtualbox" do |vb|
     vb.name = vm_name
-    vb.memory = 4096
-    vb.cpus = 4
+    vb.memory = vm_memory
+    vb.cpus = vm_cpus
+  end
+  # Use VMWare to create the VM.
+  config.vm.provider "vmware_desktop" do |vm|
+    vm.vmx['displayname'] = vm_name
+    vm.memory = vm_memory
+    vm.cpus = vm_cpus
   end
 
   # Enable provisioning with a shell script. Additional provisioners such as
   # Ansible, Chef, Docker, Puppet and Salt are also available. Please see the
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
-    # Initial system environment
+    # Remove snapd permanently
+    sudo apt purge snapd
+    sudo apt-mark hold snapd
+
+    # Set initial system environment
     cp --force /vagrant/etc_environment /etc/environment
   SHELL
 end
