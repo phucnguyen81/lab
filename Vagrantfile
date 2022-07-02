@@ -66,12 +66,6 @@ Vagrant.configure("2") do |config|
     vb.memory = vm_memory
     vb.cpus = vm_cpus
   end
-  # Use VMWare to create the VM.
-  config.vm.provider "vmware_desktop" do |vm|
-    vm.vmx['displayname'] = vm_name
-    vm.memory = vm_memory
-    vm.cpus = vm_cpus
-  end
 
   # Enable provisioning with a shell script. Additional provisioners such as
   # Ansible, Chef, Docker, Puppet and Salt are also available. Please see the
