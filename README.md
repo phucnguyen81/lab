@@ -2,4 +2,5 @@
 
 Learn Ansible.
 
-- `ansible-playbook -i ansible/vagrant_hosts ansible/main.yml --tags "base,web,ecgps"`
+- Install Ansible: `./install_ansible.sh`
+- Run playbook: `ansible-playbook playbook.yml`
