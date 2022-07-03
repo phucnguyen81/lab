@@ -2,4 +2,5 @@
 
 nodes:
   hosts:
-    vmb.local:
+    mercury:
+    venus:
