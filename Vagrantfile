@@ -43,45 +43,68 @@ Vagrant.configure("2") do |config|
     apt-get install -y avahi-daemon libnss-mdns
   SHELL
 
-  config.vm.define "earth", primary: true do |earth|
-    earth.vm.box = "bento/ubuntu-20.04"
-    earth.vm.hostname = "earth"
-    earth.vm.network :private_network, ip: "10.0.0.10"
+  config.vm.define "sun", primary: true do |node|
+    node.vm.box = "bento/ubuntu-20.04"
+    node.vm.hostname = "sun"
+    node.vm.network :private_network, ip: "10.0.0.10"
 
     # Use VirtualBox provider to create the VM
-    earth.vm.provider "virtualbox" do |vb|
-      vb.name = "earth"
+    node.vm.provider "virtualbox" do |vb|
+      vb.name = "sun"
       vb.memory = 2048  # 2GB
       vb.cpus = 2  # 2 cores
     end
 
     # Generate ssh key
-    earth.vm.provision "shell", privileged: false, inline: <<-SHELL
+    node.vm.provision "shell", privileged: false, inline: <<-SHELL
       # Generate ssh key
       ssh-keygen -t rsa -b 4096 -f ~/.ssh/nodes.key -C "Shared insecure nodes key" -N ""
       # Copy keys to shared directory
       cp --force ~/.ssh/nodes.key.pub /vagrant/tmp/nodes.key.pub
       # Set ssh config
-      cp --force /vagrant/ssh_config_earth ~/.ssh/config
+      cp --force /vagrant/ssh_config_sun ~/.ssh/config
     SHELL
   end
 
-  config.vm.define "moon" do |moon|
-    moon.vm.box = "bento/ubuntu-20.04"
-    moon.vm.hostname = "moon"
-    moon.vm.network :private_network, ip: "10.0.0.11"
+  config.vm.define "mercury" do |node|
+    node.vm.box = "bento/ubuntu-20.04"
+    node.vm.hostname = "mercury"
+    node.vm.network :private_network, ip: "10.0.0.11"
 
     # Use VirtualBox provider to create the VM
-    moon.vm.provider "virtualbox" do |vb|
-      vb.name = "moon"
-      vb.memory = 2048  # 2GB
-      vb.cpus = 2  # 2 cores
+    node.vm.provider "virtualbox" do |vb|
+      vb.name = "mercury"
+      vb.memory = 1024
+      vb.cpus = 1
     end
 
-    moon.vm.provision "shell", privileged: false, inline: <<-SHELL
+    node.vm.provision "shell", privileged: false, inline: <<-SHELL
       touch ~/.ssh/authorized_keys
       chmod 600 ~/.ssh/authorized_keys
       PUBKEY=$(cat /vagrant/tmp/nodes.key.pub); grep -q "$PUBKEY"  ~/.ssh/authorized_keys || echo "$PUBKEY" >> ~/.ssh/authorized_keys
+    SHELL
+  end
+
+  config.vm.define "venus" do |node|
+    node.vm.box = "bento/ubuntu-20.04"
+    node.vm.hostname = "venus"
+    node.vm.network :private_network, ip: "10.0.0.12"
+
+    # Use VirtualBox provider to create the VM
+    node.vm.provider "virtualbox" do |vb|
+      vb.name = "venus"
+      vb.memory = 1024
+      vb.cpus = 1
+    end
+
+    node.vm.provision "shell", privileged: false, inline: <<-SHELL
+      touch ~/.ssh/authorized_keys
+      chmod 600 ~/.ssh/authorized_keys
+      PUBKEY=$(cat /vagrant/tmp/nodes.key.pub); grep -q "$PUBKEY"  ~/.ssh/authorized_keys || echo "$PUBKEY" >> ~/.ssh/authorized_keys
+    SHELL
+
+    # Must run last to clean up temp files
+    node.vm.provision "shell", privileged: false, inline: <<-SHELL
       rm /vagrant/tmp/nodes.key.pub
     SHELL
   end
