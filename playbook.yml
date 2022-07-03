@@ -5,12 +5,12 @@
   become: true
   become_method: sudo
   tasks:
-  - name: Update packages
+  - name: update packages
     apt:
       upgrade: yes
       update_cache: yes
       cache_valid_time: 86400  # 86400: 1 day
-  - name: Install common packages
+  - name: install common packages
     package:
       name: "{{ item }}"
       state: present
@@ -31,6 +31,7 @@
   become: true
   become_method: sudo
   tasks:
-  - name: Ping mercury
-    ansible.builtin.ping:
-      data: Mercury here!
+  - name: ensure apache is at the latest version
+    apt: name=apache2 state=latest
+  - name: ensure apache is running
+    service: name=apache2 state=started enabled=yes

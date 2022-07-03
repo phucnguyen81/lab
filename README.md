@@ -6,8 +6,8 @@ Learn Chapter 07, Continuose Delibery with Docker and  Jenkins
 
 All the instructions assumes that you have:
 * [x] Ansible tool installed
-* Two Ubuntu machines with SSH configured (you should be able to `ssh` into each machine without password)
-* Ansible inventory file created (`/etc/ansible/hosts`) pointing to your remote machines
+* [x] Two Ubuntu machines with SSH configured (you should be able to `ssh` into each machine without password)
+* [x] Ansible inventory file created (`/etc/ansible/hosts`) pointing to your remote machines
 
 Sample Ansible inventory file:
 
@@ -17,7 +17,7 @@ Sample Ansible inventory file:
 
 ## Code Samples
 
-### Code Sample 1: Ad hoc commands
+### [x] Code Sample 1: Ad hoc commands
 
 To check that your inventory is correct, run the Ansible ad hoc `ping` command.
 
@@ -37,7 +37,7 @@ To check that your inventory is correct, run the Ansible ad hoc `ping` command.
 	    "ping": "pong"
 	}
 
-### Code Sample 2: Playbooks
+### [x] Code Sample 2: Playbooks
 
 The [sample2](sample2) includes a Playbook to install and run `apache2` on the `web1` host.
 
