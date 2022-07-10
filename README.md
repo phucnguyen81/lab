@@ -18,3 +18,10 @@ Create a Vagrant VM as initial environment.
 - Build the code: `./mvnw clean package`
 - Go to build directory: `cd target/`
 - Run the package: `java -jar hello-world-0.0.1-SNAPSHOT.jar`
+
+# Install MySQL
+ - Install mysql server: `sudo apt --yes install mysql-server-8.0`
+ - Check mysql service is running: `systemctl status mysql.service`
+ - Connect to mysql as root user: `sudo mysql -u root`
+   - Change root authentication to password: `ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'p@ssw0rd';`
+   - Create database: `CREATE DATABASE spring_batch;`
