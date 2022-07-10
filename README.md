@@ -12,3 +12,9 @@ Create a Vagrant VM as initial environment.
 # Install Java Environment
 - Install OpenJDK 11: `sudo apt --yes install openjdk-11-jdk`
 - Set $JAVA_HOME in /ect/environment: `JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"`
+
+# Run Chapter 02
+- Go to Chapter02: `cd /vagrant/code/Chapter02`
+- Build the code: `./mvnw clean package`
+- Go to build directory: `cd target/`
+- Run the package: `java -jar hello-world-0.0.1-SNAPSHOT.jar`
