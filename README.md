@@ -13,7 +13,7 @@ Create a Vagrant VM as initial environment.
 - Install OpenJDK 11: `sudo apt --yes install openjdk-11-jdk`
 - Set $JAVA_HOME in /ect/environment: `JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"`
 
-# Run Chapter 02
+# Chapter 02
 - Go to Chapter02: `cd /vagrant/code/Chapter02`
 - Build the code: `./mvnw clean package`
 - Go to build directory: `cd target/`
@@ -25,3 +25,7 @@ Create a Vagrant VM as initial environment.
  - Connect to mysql as root user: `sudo mysql -u root`
    - Change root authentication to password: `ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'p@ssw0rd';`
    - Create database: `CREATE DATABASE spring_batch;`
+
+# Chapter 04
+- Create jar: `./mvnw clean package`
+- Run specific jobs: `java -Dspring.batch.job.names=conditionalStepLogicJob,basicJob -jar target/Chapter04-0.0.1-SNAPSHOT.jar name=Peter0937 fileName=records0937.csv`

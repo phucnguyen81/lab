@@ -9,4 +9,3 @@ spring:
     job:
       names:
         - conditionalStepLogicJob
-# spring.batch.job.names=conditionalStepLogicJob
