@@ -11,7 +11,7 @@ public class Chapter10Application {
 		String[] realArgs = {
             "customerUpdateFile=file:///vagrant/code/Chapter10/src/main/resources/data/customer_update_shuffled.csv",
 		    "transactionFile=file:///vagrant/code/Chapter10/src/main/resources/data/transactions.xml",
-		    "outputDirectory=file:///vagrant/code/Chapter10/target/statements/"
+		    "outputDirectory=file:///vagrant/code/Chapter10/outputDir/statement"
         };
 		SpringApplication.run(Chapter10Application.class, realArgs);
 	}
