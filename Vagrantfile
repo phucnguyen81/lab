@@ -72,6 +72,10 @@ Vagrant.configure("2") do |config|
         # Remove snapd permanently
         sudo apt --yes --allow-change-held-packages purge snapd
         sudo apt-mark hold snapd
+        sudo apt --yes autoremove
+
+        # Install Java development environment
+        sudo apt --yes install openjdk-11-jdk
 
         # Set initial system environment
         sudo cp --force /vagrant/etc_environment /etc/environment
