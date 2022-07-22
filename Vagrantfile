@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-vm_name = "elastic"  # Same name for both vagrant environment and virtualbox vm
+vm_name = "vagrant"  # Same name for both vagrant environment and virtualbox vm
 vm_memory = 4096  # 4 GB
 vm_cpus = 4  # 4 cores
 
@@ -69,16 +69,9 @@ Vagrant.configure("2") do |config|
     # Ansible, Chef, Docker, Puppet and Salt are also available. Please see the
     # documentation for more information about their specific syntax and use.
     config.vm.provision "shell", privileged: false, inline: <<-SHELL
-        # Remove snapd permanently
-        sudo apt --yes --allow-change-held-packages purge snapd
-        sudo apt-mark hold snapd
-        sudo apt --yes autoremove
-
-        # Install Java development environment
-        sudo apt --yes install openjdk-11-jdk
-
         # Set initial system environment
         sudo cp --force /vagrant/etc_environment /etc/environment
     SHELL
+
   end
 end
