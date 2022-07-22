@@ -1,11 +1,8 @@
 #!/bin/bash
 
-# Adds the public GPG key
-curl -fsSL https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
-echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list
-sudo apt update
 # Install specific version of elasticsearch
-sudo apt install elasticsearch=7.17.5
+sudo apt update
+sudo apt install elasticsearch=$ES_VERSION
 
 ### Configure elasticsearch
 # Overwrite the config file
@@ -16,3 +13,13 @@ sudo systemctl start elasticsearch
 sudo systemctl enable elasticsearch
 # Test elasticsearch
 curl -X GET 'http://localhost:9200'
+
+# Add a custom site
+sudo mkdir -p /var/www/elastic/html
+sudo chown -R vagrant:vagrant /var/www/elastic/html
+sudo chmod -R 755 /var/www/elastic
+sudo cp --force /vagrant/index.html /var/www/elastic/html/index.html
+sudo cp --force /vagrant/elastic_site /etc/nginx/sites-available/elastic
+sudo ln -s --force /etc/nginx/sites-available/elastic /etc/nginx/sites-enabled/
+# Reload to apply changes
+sudo systemctl reload nginx

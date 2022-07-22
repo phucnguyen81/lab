@@ -71,6 +71,10 @@ Vagrant.configure("2") do |config|
     config.vm.provision "shell", privileged: false, inline: <<-SHELL
       # Overwrite system environment file
       sudo cp --force /vagrant/etc_environment /etc/environment
+
+      # Add elasticsearch public GPG key
+      curl -fsSL https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+      sudo cp --force /vagrant/elastic-7.x.list /etc/apt/sources.list.d/elastic-7.x.list
     SHELL
   end
 end
